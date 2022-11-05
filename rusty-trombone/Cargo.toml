@@ -8,7 +8,11 @@ publish = false
 
 [dependencies]
 anyhow = "1.0.62"
-serenity = { version = "0.11.5", default-features = false, features = ["client", "gateway", "rustls_backend", "model"] }
+serde = "1.0"
+serenity = { version = "0.11.5", features = ["client", "gateway", "rustls_backend", "model", "voice", "framework", "standard_framework"] }
 shuttle-secrets = "0.7.2"
 shuttle-service = { version = "0.7.2", features = ["bot-serenity"] }
+shuttle-shared-db = { version = "0.7.2", features = ["postgres"] }
+songbird = "0.3.0"
+sqlx = { version = "0.6", features = ["runtime-tokio-native-tls", "postgres"] }
 tracing = "0.1.35"
