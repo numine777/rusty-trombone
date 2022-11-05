@@ -1,0 +1,14 @@
+[package]
+name = "rusty-trombone"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+
+[dependencies]
+anyhow = "1.0.62"
+serenity = { version = "0.11.5", default-features = false, features = ["client", "gateway", "rustls_backend", "model"] }
+shuttle-secrets = "0.7.2"
+shuttle-service = { version = "0.7.2", features = ["bot-serenity"] }
+tracing = "0.1.35"
