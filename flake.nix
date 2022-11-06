@@ -13,6 +13,7 @@
       rec {
         devShell = pkgs.mkShell {
           packages = with pkgs; [
+            cmake
             openssl
             pkg-config
             rustup
