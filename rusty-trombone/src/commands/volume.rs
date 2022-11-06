@@ -43,25 +43,14 @@ pub async fn undeafen(ctx: &Context, msg: &Message) -> CommandResult {
     let manager = songbird::get(ctx).await
         .expect("Songbird voice client passed in at initialization").clone();
 
-    let handler_lock = match manager.get(guild_id) {
-        Some(handler) => handler,
-        None => {
-            check_msg(msg.reply(ctx, "Not in a voice channel").await);
-
-            return Ok(());
-        }
-    };
-
-    let mut handler = handler_lock.lock().await;
-
-    if handler.is_deaf() {
+    if let Some(handler_lock) = manager.get(guild_id) {
+        let mut handler = handler_lock.lock().await;
         if let Err(e) = handler.deafen(false).await {
             check_msg(msg.channel_id.say(&ctx.http, format!("Failed: {:?}", e)).await);
         }
-
-        check_msg(msg.channel_id.say(&ctx.http, "undeafened").await);
+        check_msg(msg.channel_id.say(&ctx.http, "Undeafened").await);
     } else {
-        check_msg(msg.channel_id.say(&ctx.http, "Already undeafened").await);
+        check_msg(msg.reply(ctx, "Not in a voice channel").await);
     }
 
     return Ok(())
@@ -70,12 +59,14 @@ pub async fn undeafen(ctx: &Context, msg: &Message) -> CommandResult {
 #[command]
 #[only_in(guilds)]
 pub async fn mute(ctx: &Context, msg: &Message) -> CommandResult {
+    check_msg(msg.reply(ctx, "Mute pressed").await);
     return Ok(())
 }
 
 #[command]
 #[only_in(guilds)]
 pub async fn unmute(ctx: &Context, msg: &Message) -> CommandResult {
+    check_msg(msg.reply(ctx, "Unmute pressed").await);
     return Ok(())
 }
 
